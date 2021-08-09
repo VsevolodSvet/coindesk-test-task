@@ -15,6 +15,11 @@ public class CoindeskApiService {
 
     public static final String HOST = "https://api.coindesk.com/v1/bpi";
     public static final int PERIOD = 30;
+    public OkHttpClient okHttpClient;
+
+    public CoindeskApiService(OkHttpClient okHttpClient) {
+        this.okHttpClient = okHttpClient;
+    }
 
     public void printData(String currency) {
         Request request = new Request.Builder()
@@ -64,10 +69,9 @@ public class CoindeskApiService {
     }
 
     private String getResponse(Request currentRateRequest) {
-        OkHttpClient client = getClient();
         String responseString = null;
         try {
-            Response response = client.newCall(currentRateRequest).execute();
+            Response response = okHttpClient.newCall(currentRateRequest).execute();
             responseString = response.body().string();
         } catch (IOException e) {
             e.printStackTrace();
@@ -79,9 +83,5 @@ public class CoindeskApiService {
             return null;
         }
         return responseString;
-    }
-
-    private OkHttpClient getClient() {
-        return new OkHttpClient();
     }
 }
