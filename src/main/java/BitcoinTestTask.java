@@ -1,3 +1,4 @@
+import com.squareup.okhttp.OkHttpClient;
 import service.CoindeskApiService;
 
 import java.util.Scanner;
@@ -8,7 +9,7 @@ public class BitcoinTestTask {
     public static void main(String[] args) {
         boolean retry = true;
         while (retry) {
-            coindeskApiService = new CoindeskApiService();
+            coindeskApiService = new CoindeskApiService(new OkHttpClient());
             System.out.print("Please enter currency code: ");
             Scanner sc = new Scanner(System.in);
             String currency = sc.nextLine();
